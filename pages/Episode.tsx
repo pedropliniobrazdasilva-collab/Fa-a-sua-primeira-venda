@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { COURSE_DATA } from '../constants';
 import { UserProgress } from '../types';
 import { Button } from '../components/Button';
@@ -79,18 +79,19 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
   };
 
   const content = episode.content;
+  const backLink = parentModuleId ? `/modulo/${parentModuleId}` : '/modulos';
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Back Button */}
-      <button 
-        onClick={() => parentModuleId ? navigate(`/modulo/${parentModuleId}`) : navigate('/modulos')} 
-        className="flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
+      {/* Back Button - Changed to Link for stability */}
+      <Link 
+        to={backLink}
+        className="inline-flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
         Voltar ao Módulo
-      </button>
+      </Link>
 
       {/* Episode Header */}
       <div className="mb-8">

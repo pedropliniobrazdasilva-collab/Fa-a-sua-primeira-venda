@@ -40,14 +40,14 @@ export const ModuleDetail: React.FC<ModuleDetailProps> = ({ progress }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 animate-in slide-in-from-right-4 duration-500">
       
-      {/* Breadcrumb Nav */}
-      <button 
-        onClick={() => navigate('/modulos')} 
-        className="flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
+      {/* Breadcrumb Nav - Changed to Link for stability */}
+      <Link 
+        to="/modulos"
+        className="inline-flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
         Voltar aos Módulos
-      </button>
+      </Link>
 
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
         

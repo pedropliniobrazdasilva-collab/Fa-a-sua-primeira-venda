@@ -28,8 +28,8 @@ export const Layout: React.FC<LayoutProps> = ({ children, progressPercentage }) 
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyan-900/10 rounded-full blur-[80px]"></div>
       </div>
 
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 glass-panel border-b border-white/5">
+      {/* Header - Z-Index increased to 100 to prevent overlap issues */}
+      <header className="fixed top-0 w-full z-[100] glass-panel border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
             {/* Logo */}
