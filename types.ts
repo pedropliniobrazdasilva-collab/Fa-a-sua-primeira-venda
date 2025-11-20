@@ -1,6 +1,7 @@
 export interface EpisodeContent {
-  intro: string;
-  explanation: string;
+  summary: string;
+  intro?: string; // Optional now, as summary takes precedence
+  explanation?: string; // Optional
   steps: string[];
   examples: string[];
   checklist: string[];

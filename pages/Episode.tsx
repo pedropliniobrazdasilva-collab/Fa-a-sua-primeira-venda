@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { COURSE_DATA } from '../constants';
 import { UserProgress } from '../types';
 import { Button } from '../components/Button';
-import { CheckSquare, ArrowRight, Check, Target, List, Zap, FileText, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { CheckSquare, ArrowRight, Check, Target, List, PlayCircle, FileText, AlertTriangle, ArrowLeft, BookOpen } from 'lucide-react';
 
 interface EpisodeProps {
   progress: UserProgress;
@@ -74,7 +74,7 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
   const handleComplete = () => {
     if (episode) {
       onComplete(episode.id);
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      // No scroll here, handled by scroll restoration
     }
   };
 
@@ -93,7 +93,7 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
       </button>
 
       {/* Episode Header */}
-      <div className="mb-10 pb-8 border-b border-white/10">
+      <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
           <span className="px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded text-cyan-400 text-xs font-bold uppercase tracking-widest">
              Aula {String(episode.globalIndex).padStart(2, '0')}
@@ -109,38 +109,53 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
         </h1>
       </div>
 
+      {/* VIDEO PLACEHOLDER SECTION */}
+      <div className="mb-12">
+         <div className="aspect-video w-full bg-black rounded-2xl border border-white/10 flex flex-col items-center justify-center relative overflow-hidden group shadow-[0_0_40px_rgba(6,182,212,0.1)]">
+            {/* Animated Background */}
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(6,182,212,0.1)_0%,transparent_40%,transparent_60%,rgba(139,92,246,0.1)_100%)] opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+            
+            {/* Scanlines */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none" />
+
+            <div className="relative z-10 flex flex-col items-center animate-pulse">
+               <PlayCircle className="w-20 h-20 text-white/20 group-hover:text-cyan-400 transition-all duration-500 scale-95 group-hover:scale-110" />
+               <span className="mt-6 text-cyan-500/50 text-sm font-bold uppercase tracking-[0.3em] group-hover:text-cyan-400 transition-colors">
+                 Vídeo em Breve
+               </span>
+            </div>
+         </div>
+      </div>
+
       {/* Content Blocks */}
       <div className="space-y-12 text-gray-300 leading-relaxed text-lg">
         
-        {/* Intro */}
-        <div className="glass-panel p-8 rounded-2xl border-l-4 border-violet-500 bg-gradient-to-r from-violet-900/10 to-transparent">
-          <h3 className="text-white font-bold mb-4 flex items-center gap-2 uppercase tracking-wider text-sm">
-            <Zap className="text-violet-400 w-5 h-5" /> Introdução
-          </h3>
-          <p className="text-white/90 font-medium">{content.intro}</p>
-        </div>
-
-        {/* Deep Dive Explanation */}
-        <div className="prose prose-invert max-w-none">
-          <h3 className="text-2xl text-white font-bold mb-4 flex items-center gap-2">
-            <FileText className="text-cyan-400" /> O Conceito
-          </h3>
-          <p className="text-gray-300 leading-8">{content.explanation}</p>
+        {/* RESUMO DA AULA (Substituindo a antiga Intro/Explanation) */}
+        <div className="relative">
+           <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-violet-500 to-transparent hidden md:block" />
+           <h3 className="text-2xl text-white font-bold mb-6 flex items-center gap-3 font-orbitron">
+              <BookOpen className="text-cyan-400 w-6 h-6" /> RESUMO DA AULA
+           </h3>
+           <div className="glass-panel p-8 rounded-2xl border border-white/10 bg-gradient-to-b from-white/[0.03] to-transparent">
+              <p className="text-gray-200 text-lg leading-8 whitespace-pre-line">
+                {content.summary}
+              </p>
+           </div>
         </div>
 
         {/* Actionable Steps */}
         <div className="bg-neutral-900/50 rounded-2xl p-8 border border-white/5">
-           <h3 className="text-2xl text-white font-bold mb-8 flex items-center gap-3">
-             <List className="text-cyan-400" /> Plano de Ação
+           <h3 className="text-xl text-white font-bold mb-8 flex items-center gap-3 uppercase tracking-wider text-sm">
+             <List className="text-violet-400" /> Pontos Chave & Ação
            </h3>
            <div className="space-y-6">
              {content.steps.map((step, i) => (
-               <div key={i} className="flex gap-5">
-                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-600 to-violet-700 text-white flex items-center justify-center font-bold shadow-lg shadow-cyan-500/20">
+               <div key={i} className="flex gap-5 group">
+                 <div className="flex-shrink-0 w-8 h-8 rounded bg-white/5 text-gray-400 border border-white/10 flex items-center justify-center font-bold text-sm group-hover:border-cyan-500/50 group-hover:text-cyan-400 transition-colors">
                    {i + 1}
                  </div>
-                 <div className="pt-1">
-                    <p className="text-white font-medium">{step}</p>
+                 <div className="pt-0.5">
+                    <p className="text-gray-300 group-hover:text-white transition-colors">{step}</p>
                  </div>
                </div>
              ))}
@@ -150,13 +165,13 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
         {/* Real World Examples */}
         <div className="grid md:grid-cols-2 gap-6">
           <div className="md:col-span-2 mb-2">
-             <h3 className="text-xl text-white font-bold flex items-center gap-2">
-               <AlertTriangle className="text-yellow-400" /> Exemplos Reais
+             <h3 className="text-lg text-white font-bold flex items-center gap-2 uppercase tracking-wider text-sm">
+               <AlertTriangle className="text-yellow-400" /> Exemplos Práticos
              </h3>
           </div>
           {content.examples.map((ex, i) => (
             <div key={i} className="p-6 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-              <p className="italic text-gray-400">"{ex}"</p>
+              <p className="italic text-gray-400 text-base">"{ex}"</p>
             </div>
           ))}
         </div>
@@ -195,12 +210,18 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
         </div>
 
         {/* Task Mission */}
-        <div className="bg-gradient-to-br from-cyan-900/30 to-violet-900/30 p-10 rounded-2xl border border-cyan-500/20 text-center relative">
-          <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#050505] px-4 text-cyan-400">
-             <Target className="w-10 h-10" />
+        <div className="bg-gradient-to-br from-cyan-900/20 to-violet-900/20 p-10 rounded-2xl border border-cyan-500/20 text-center relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-violet-500/10 rounded-full blur-3xl -ml-10 -mb-10"></div>
+          
+          <div className="relative z-10">
+            <div className="inline-flex items-center justify-center p-3 rounded-full bg-cyan-500/10 text-cyan-400 mb-4 border border-cyan-500/20">
+               <Target className="w-6 h-6" />
+            </div>
+            <h3 className="text-2xl text-white font-bold mb-4 font-orbitron">SUA MISSÃO AGORA</h3>
+            <p className="text-cyan-50 text-lg max-w-2xl mx-auto">{content.task}</p>
           </div>
-          <h3 className="text-2xl text-white font-bold mb-4 mt-2 font-orbitron">SUA MISSÃO AGORA</h3>
-          <p className="text-cyan-50 text-lg">{content.task}</p>
         </div>
 
       </div>
