@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { COURSE_DATA } from '../constants';
 import { UserProgress } from '../types';
 import { Lock, Play, Check, ArrowLeft, List, Clock } from 'lucide-react';
@@ -26,7 +26,6 @@ export const ModuleDetail: React.FC<ModuleDetailProps> = ({ progress }) => {
   const isEpisodeLocked = (globalIndex: number) => {
     if (globalIndex === 1) return false; 
     // Simplified logic: find if previous global index is completed
-    // Note: In a real app, using IDs directly is safer
     let prevEpId = '';
     // Find the ID of the episode with globalIndex - 1
     for(const m of COURSE_DATA) {
@@ -40,14 +39,14 @@ export const ModuleDetail: React.FC<ModuleDetailProps> = ({ progress }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 md:py-12 animate-in slide-in-from-right-4 duration-500">
       
-      {/* Breadcrumb Nav - Changed to Link for stability */}
-      <Link 
-        to="/modulos"
+      {/* Back Button - Simple History Navigation */}
+      <button 
+        onClick={() => navigate(-1)}
         className="inline-flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
-        Voltar aos Módulos
-      </Link>
+        Voltar
+      </button>
 
       <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
         

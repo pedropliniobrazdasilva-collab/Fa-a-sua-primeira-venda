@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { COURSE_DATA } from '../constants';
 import { UserProgress } from '../types';
 import { Button } from '../components/Button';
-import { CheckSquare, ArrowRight, Check, Target, List, PlayCircle, FileText, AlertTriangle, ArrowLeft, BookOpen } from 'lucide-react';
+import { CheckSquare, ArrowRight, Check, Target, List, PlayCircle, AlertTriangle, ArrowLeft, BookOpen } from 'lucide-react';
 
 interface EpisodeProps {
   progress: UserProgress;
@@ -79,19 +79,18 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
   };
 
   const content = episode.content;
-  const backLink = parentModuleId ? `/modulo/${parentModuleId}` : '/modulos';
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
       
-      {/* Back Button - Changed to Link for stability */}
-      <Link 
-        to={backLink}
+      {/* Back Button - Simple history navigation */}
+      <button 
+        onClick={() => navigate(-1)}
         className="inline-flex items-center gap-2 text-gray-500 hover:text-cyan-400 mb-8 transition-colors text-xs font-bold uppercase tracking-widest group"
       >
         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> 
-        Voltar ao Módulo
-      </Link>
+        Voltar
+      </button>
 
       {/* Episode Header */}
       <div className="mb-8">
@@ -131,7 +130,7 @@ export const Episode: React.FC<EpisodeProps> = ({ progress, onComplete, onVisit 
       {/* Content Blocks */}
       <div className="space-y-12 text-gray-300 leading-relaxed text-lg">
         
-        {/* RESUMO DA AULA (Substituindo a antiga Intro/Explanation) */}
+        {/* RESUMO DA AULA */}
         <div className="relative">
            <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-violet-500 to-transparent hidden md:block" />
            <h3 className="text-2xl text-white font-bold mb-6 flex items-center gap-3 font-orbitron">

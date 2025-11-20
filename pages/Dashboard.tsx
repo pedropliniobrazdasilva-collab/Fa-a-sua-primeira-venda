@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserProgress, Episode } from '../types';
 import { COURSE_DATA, TOTAL_EPISODES } from '../constants';
 import { ProgressBar } from '../components/ProgressBar';
@@ -12,6 +12,7 @@ interface DashboardProps {
 }
 
 export const Dashboard: React.FC<DashboardProps> = ({ progress, onResetProgress }) => {
+  const navigate = useNavigate();
   
   // 1. Time based greeting
   const hour = new Date().getHours();
@@ -121,11 +122,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ progress, onResetProgress 
 
               {activeEpisode ? (
                 <div className="flex items-center gap-4">
-                  <Link to={`/episodio/${activeEpisode.id}`}>
-                    <Button variant="primary" glow>
-                      {progress.episodesCompleted.length === 0 ? "COMEÇAR AGORA" : "CONTINUAR AULA"}
-                    </Button>
-                  </Link>
+                  <Button onClick={() => navigate(`/episodio/${activeEpisode.id}`)} variant="primary" glow>
+                    {progress.episodesCompleted.length === 0 ? "COMEÇAR AGORA" : "CONTINUAR AULA"}
+                  </Button>
                   <div className="text-xs text-gray-500 font-mono">
                     Episódio {String(activeEpisode.globalIndex).padStart(2,'0')}
                   </div>

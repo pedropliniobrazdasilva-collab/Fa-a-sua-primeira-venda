@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { CheckCircle, Lock, ArrowRight, PlayCircle, ShieldCheck } from 'lucide-react';
 import { COURSE_DATA, FAQ_DATA } from '../constants';
 
 export const Home: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="animate-in fade-in duration-700">
       
@@ -27,16 +29,12 @@ export const Home: React.FC = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-          <Link to="/modulos">
-            <Button variant="secondary" glow className="w-full sm:w-auto">
-              QUERO FAZER MINHA PRIMEIRA VENDA
-            </Button>
-          </Link>
-          <Link to="/modulos">
-             <Button variant="outline" className="w-full sm:w-auto">
-              VER GRADE CURRICULAR
-            </Button>
-          </Link>
+          <Button onClick={() => navigate('/modulos')} variant="secondary" glow className="w-full sm:w-auto">
+            QUERO FAZER MINHA PRIMEIRA VENDA
+          </Button>
+          <Button onClick={() => navigate('/modulos')} variant="outline" className="w-full sm:w-auto">
+            VER GRADE CURRICULAR
+          </Button>
         </div>
 
         {/* Floating Stats/Elements */}
@@ -154,11 +152,9 @@ export const Home: React.FC = () => {
       {/* FINAL CTA */}
       <section className="py-24 text-center px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">ESTÁ PRONTO?</h2>
-        <Link to="/modulos">
-          <Button variant="secondary" glow className="text-xl px-12 py-6">
-            COMEÇAR AGORA <ArrowRight className="w-6 h-6" />
-          </Button>
-        </Link>
+        <Button onClick={() => navigate('/modulos')} variant="secondary" glow className="text-xl px-12 py-6">
+          COMEÇAR AGORA <ArrowRight className="w-6 h-6" />
+        </Button>
       </section>
 
     </div>
